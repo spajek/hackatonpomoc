@@ -6,33 +6,29 @@ import { Act, PreConsultationProject, ConsultationProject } from '@/types'
 export function useHomeSearch(
   actsData: Act[],
   prekonsultacjeData: PreConsultationProject[],
-  konsultacjeData: ConsultationProject[],
+  konsultacjeData: ConsultationProject[], // ← poprawny typ
 ) {
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredActs = useMemo(() => {
     if (!searchQuery) return actsData
-    const query = searchQuery.toLowerCase()
-    return actsData.filter((act) => act.title.toLowerCase().includes(query))
+    const q = searchQuery.toLowerCase()
+    return actsData.filter((act) => act.title.toLowerCase().includes(q))
   }, [actsData, searchQuery])
 
   const filteredPrekonsultacje = useMemo(() => {
     if (!searchQuery) return prekonsultacjeData
-    const query = searchQuery.toLowerCase()
+    const q = searchQuery.toLowerCase()
     return prekonsultacjeData.filter(
-      (project) =>
-        project.title.toLowerCase().includes(query) ||
-        project.description.toLowerCase().includes(query),
+      (p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q),
     )
   }, [prekonsultacjeData, searchQuery])
 
   const filteredKonsultacje = useMemo(() => {
     if (!searchQuery) return konsultacjeData
-    const query = searchQuery.toLowerCase()
+    const q = searchQuery.toLowerCase()
     return konsultacjeData.filter(
-      (project) =>
-        project.title.toLowerCase().includes(query) ||
-        project.description.toLowerCase().includes(query),
+      (p) => p.title.toLowerCase().includes(q) || p.description.toLowerCase().includes(q),
     )
   }, [konsultacjeData, searchQuery])
 
