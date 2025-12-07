@@ -1,4 +1,5 @@
 import { Status } from '@/types/common'
+import { ConsultationProject } from '@/types/consultations'
 
 export interface Comment {
   id: string
@@ -174,20 +175,6 @@ export const preConsultationProjects: PreConsultationProject[] = [
     ],
   },
 ]
-
-export interface ConsultationProject {
-  id: string
-  title: string
-  description: string
-  category: string
-  status: Status
-  deadline: string
-  createdAt: string
-  institution: string
-  participantsCount: number
-  documentsCount: number
-  meetingsCount: number
-}
 
 export const consultationProjects: ConsultationProject[] = [
   {
