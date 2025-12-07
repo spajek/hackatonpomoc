@@ -1,6 +1,4 @@
-'use client'
-
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { Act, PreConsultationProject, ConsultationProject } from '@/types'
 
 export function useHomeSearch(
@@ -10,36 +8,34 @@ export function useHomeSearch(
 ) {
   const [searchQuery, setSearchQuery] = useState('')
 
-  const query = searchQuery.toLowerCase()
+  const filteredActs = useMemo(() => {
+    if (!searchQuery) return actsData
+    const query = searchQuery.toLowerCase()
+    return actsData.filter(
+      (act) =>
+        act.title.toLowerCase().includes(query),
+    )
+  }, [actsData, searchQuery])
 
-  const filteredActs = !query
-    ? actsData
-    : actsData.filter(
-        (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.ELI.toLowerCase().includes(query) ||
-          item.status.toLowerCase().includes(query),
-      )
+  const filteredPrekonsultacje = useMemo(() => {
+    if (!searchQuery) return prekonsultacjeData
+    const query = searchQuery.toLowerCase()
+    return prekonsultacjeData.filter(
+      (project) =>
+        project.title.toLowerCase().includes(query) ||
+        project.description?.toLowerCase().includes(query),
+    )
+  }, [prekonsultacjeData, searchQuery])
 
-  const filteredPrekonsultacje = !query
-    ? prekonsultacjeData
-    : prekonsultacjeData.filter(
-        (project) =>
-          project.title.toLowerCase().includes(query) ||
-          project.description.toLowerCase().includes(query) ||
-          project.category.toLowerCase().includes(query) ||
-          project.institution.toLowerCase().includes(query),
-      )
-
-  const filteredKonsultacje = !query
-    ? konsultacjeData
-    : konsultacjeData.filter(
-        (project) =>
-          project.title.toLowerCase().includes(query) ||
-          project.description.toLowerCase().includes(query) ||
-          project.category.toLowerCase().includes(query) ||
-          project.institution.toLowerCase().includes(query),
-      )
+  const filteredKonsultacje = useMemo(() => {
+    if (!searchQuery) return konsultacjeData
+    const query = searchQuery.toLowerCase()
+    return konsultacjeData.filter(
+      (project) =>
+        project.title.toLowerCase().includes(query) ||
+        project.description?.toLowerCase().includes(query),
+    )
+  }, [konsultacjeData, searchQuery])
 
   return {
     searchQuery,

@@ -24,17 +24,14 @@ export default function HomeCards() {
   const [activeTab, setActiveTab] = useState<string | null>('ustawy')
   const [selectedProject, setSelectedProject] = useState<PreConsultationProject | null>(null)
 
-  // Load data based on active tab
   const { actsData, prekonsultacjeData, konsultacjeData, loading } = useHomeData(activeTab)
 
-  // Initialize project comments hook
   const {
     projects: prekonsultacjeWithComments,
     addComment,
     rateProject,
   } = useProjectComments(prekonsultacjeData)
 
-  // Search functionality
   const { searchQuery, setSearchQuery, filteredActs, filteredPrekonsultacje, filteredKonsultacje } =
     useHomeSearch(actsData, prekonsultacjeWithComments, konsultacjeData)
 
@@ -55,7 +52,6 @@ export default function HomeCards() {
         />
       </Stack>
 
-      {/* Project Details Modal */}
       <Modal
         opened={!!selectedProject}
         onClose={() => setSelectedProject(null)}
