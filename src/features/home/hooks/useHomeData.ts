@@ -13,7 +13,7 @@ export function useHomeData(activeTab: string | null) {
       if (activeTab === 'ustawy') {
         setLoading(true)
         try {
-          const response = await fakeFetchUstawy('DU', '2024', 1, 6)
+          const response = await fakeFetchUstawy('DU', '2025', 1, 6)
           setActsData(response.items)
         } catch (error) {
           console.error('Błąd pobierania danych', error)
