@@ -37,8 +37,23 @@ interface Props {
   comments?: string[]
 }
 
+interface SummaryData {
+  humanSummary: string
+  summary: {
+    confidence: number
+    mainPoints: string[]
+    impact: string
+    complexity: 'low' | 'medium' | 'high'
+    stakeholders: string[]
+    timeline: string
+    risks: string[]
+    opportunities: string[]
+    recommendation: string
+  }
+}
+
 export function AISummaryGroq({ type, title, description, content = '', comments = [] }: Props) {
-  const [data, setData] = useState<any>(null)
+  const [data, setData] = useState<SummaryData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -54,8 +69,8 @@ export function AISummaryGroq({ type, title, description, content = '', comments
       const json = await res.json()
       if (json.error) throw new Error(json.error)
       setData(json) // { humanSummary, summary }
-    } catch (err: any) {
-      setError(err.message || 'Błąd analizy')
+    } catch (err: Error | unknown) {
+      setError(err instanceof Error ? err.message : 'Błąd analizy')
     } finally {
       setLoading(false)
     }

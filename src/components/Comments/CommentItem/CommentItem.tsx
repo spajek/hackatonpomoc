@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, Text, Group, Avatar, Rating, Badge, Stack } from '@mantine/core'
+import { Card, Text, Group, Avatar, Rating, Badge } from '@mantine/core'
 import { Comment } from '@/types'
 import { CommentActions } from './CommentActions'
 

@@ -1,7 +1,6 @@
 'use client'
 
 import { Stack, Group, Text, Badge, Grid } from '@mantine/core'
-import { IconBuilding, IconCalendar } from '@tabler/icons-react'
 import { PreConsultationProject } from '@/types'
 import { StatusBadge } from '@/components/shared'
 

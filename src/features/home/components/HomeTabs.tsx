@@ -6,14 +6,14 @@ import Link from 'next/link'
 import { ActsTab } from './ActsTab'
 import { PreConsultationsTab } from './PreConsultationsTab'
 import { ConsultationsTab } from './ConsultationsTab'
-import { Act, PreConsultationProject } from '@/types'
+import { Act, PreConsultationProject, ConsultationProject } from '@/types'
 
 interface HomeTabsProps {
   activeTab: string | null
   onTabChange: (value: string | null) => void
   actsData: Act[]
   prekonsultacjeData: PreConsultationProject[]
-  konsultacjeData: any[]
+  konsultacjeData: ConsultationProject[]
   loading: boolean
   searchQuery: string
   onProjectClick: (project: PreConsultationProject) => void

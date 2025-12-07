@@ -8,12 +8,10 @@ import {
   Stack,
   Progress,
   Badge,
-  ActionIcon,
-  Tooltip,
   Modal,
   Textarea,
 } from '@mantine/core'
-import { IconStar, IconUsers, IconCalendar, IconBuilding } from '@tabler/icons-react'
+import { IconStar, IconUsers } from '@tabler/icons-react'
 
 interface ProjectRatingProps {
   averageRating: number

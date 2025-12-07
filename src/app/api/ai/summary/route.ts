@@ -69,8 +69,7 @@ Zwróć dokładnie tak:
     })
   } catch (error: unknown) {
     console.error('Groq error:', error)
-    const errorMessage =
-      error instanceof Error ? error.message : 'Błąd AI'
+    const errorMessage = error instanceof Error ? error.message : 'Błąd AI'
     return Response.json({ error: errorMessage }, { status: 500 })
   }
 }

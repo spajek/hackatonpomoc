@@ -1,17 +1,17 @@
-"use client";
+'use client'
 
-import { AppShell, Burger, Group, Text, Anchor } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { type ReactNode } from "react";
-import Link from "next/link";
-import AccessibilityPanel from "../AccessibilityPanel/AccessibilityPanel";
+import { AppShell, Burger, Group, Anchor } from '@mantine/core'
+import { useDisclosure } from '@mantine/hooks'
+import { type ReactNode } from 'react'
+import Link from 'next/link'
+import AccessibilityPanel from '../AccessibilityPanel/AccessibilityPanel'
 
 interface AppShellLayoutProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export default function AppShellLayout({ children }: AppShellLayoutProps) {
-  const [opened, { toggle }] = useDisclosure(false);
+  const [opened, { toggle }] = useDisclosure(false)
 
   return (
     <AppShell padding="md" header={{ height: 60 }}>
@@ -31,15 +31,15 @@ export default function AppShellLayout({ children }: AppShellLayoutProps) {
               fw={700}
               c="inherit"
               td="none"
-              style={{ 
-                cursor: "pointer",
-                transition: "color 0.2s ease"
+              style={{
+                cursor: 'pointer',
+                transition: 'color 0.2s ease',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.color = "var(--mantine-color-blue-6)";
+                e.currentTarget.style.color = 'var(--mantine-color-blue-6)'
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.color = "inherit";
+                e.currentTarget.style.color = 'inherit'
               }}
             >
               INTERAKTYWNY PORTAL ANALIZ LEGISLACYJNYCH (IPAL)
@@ -54,5 +54,5 @@ export default function AppShellLayout({ children }: AppShellLayoutProps) {
 
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
-  );
+  )
 }

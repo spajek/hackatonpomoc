@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 import {
   Card,
   Text,
@@ -9,13 +9,10 @@ import {
   ThemeIcon,
   Badge,
   List,
-  ActionIcon,
-  Tooltip,
   Progress,
-} from "@mantine/core";
+} from '@mantine/core'
 import {
   IconBrain,
-  IconRefresh,
   IconInfoCircle,
   IconBulb,
   IconAlertTriangle,
@@ -24,200 +21,184 @@ import {
   IconScale,
   IconUsers,
   IconFileText,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react'
 
 interface AISummaryProps {
-  type: "ustawa" | "konsultacja" | "prekonsultacja";
-  title: string;
-  description?: string;
-  content?: string;
-  comments?: any[];
-  participants?: number;
-  status?: string;
+  type: 'ustawa' | 'konsultacja' | 'prekonsultacja'
+  title: string
+  description?: string
+  content?: string
+  comments?: string[]
+  participants?: number
+  status?: string
 }
 
 interface AISummaryData {
-  mainPoints: string[];
-  impact: string;
-  complexity: "low" | "medium" | "high";
-  stakeholders: string[];
-  timeline: string;
-  risks: string[];
-  opportunities: string[];
-  recommendation: string;
-  confidence: number;
+  mainPoints: string[]
+  impact: string
+  complexity: 'low' | 'medium' | 'high'
+  stakeholders: string[]
+  timeline: string
+  risks: string[]
+  opportunities: string[]
+  recommendation: string
+  confidence: number
 }
 
-export function AISummary({
-  type,
-  title,
-  description,
-  content,
-  comments,
-  participants,
-  status,
-}: AISummaryProps) {
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [summary, setSummary] = useState<AISummaryData | null>(null);
-
-  const generateAISummary = async () => {
-    setIsAnalyzing(true);
-
-    // Symulacja czasu analizy
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-
-    // Mockowe streszczenie AI na podstawie typu
-    let mockSummary: AISummaryData;
-
-    if (type === "ustawa") {
-      mockSummary = {
-        mainPoints: [
-          "Wprowadzenie nowych standardów ochrony danych osobowych",
-          "Wzmocnienie kar za naruszenie przepisów",
-          "Uproszczenie procedur dla małych organizacji",
-          "Rozszerzenie definicji danych wrażliwych",
-        ],
-        impact:
-          "Średni - wpłynie na wszystkie instytucje publiczne i część sektora prywatnego",
-        complexity: "medium",
-        stakeholders: [
-          "Instytucje publiczne",
-          "Firmy IT",
-          "Organizacje pozarządowe",
-          "Obywatele",
-        ],
-        timeline: "Wejście w życie planowane na 6 miesięcy od publikacji",
-        risks: [
-          "Wysokie koszty implementacji dla małych firm",
-          "Możliwe opóźnienia w dostosowaniu systemów IT",
-          "Potrzeba szkoleń dla personelu",
-        ],
-        opportunities: [
-          "Zwiększenie zaufania obywateli do instytucji",
-          "Harmonizacja z regulacjami UE",
-          "Rozwój sektora cyberbezpieczeństwa",
-        ],
-        recommendation:
-          "Ustawa jest potrzebna, ale wymaga wydłużenia okresu przejściowego i dodatkowego wsparcia dla małych organizacji.",
-        confidence: 87,
-      };
-    } else if (type === "konsultacja") {
-      mockSummary = {
-        mainPoints: [
-          "Reforma ma na celu poprawę dostępności usług zdrowotnych",
-          "Planowane zwiększenie finansowania o 15%",
-          "Digitalizacja procesów medycznych",
-          "Nowe standardy jakości opieki",
-        ],
-        impact:
-          "Wysoki - dotknie wszystkich pacjentów i pracowników służby zdrowia",
-        complexity: "high",
-        stakeholders: [
-          "Pacjenci",
-          "Lekarze",
-          "Pielęgniarki",
-          "Szpitale",
-          "NFZ",
-          "Firmy farmaceutyczne",
-        ],
-        timeline: "Implementacja w ciągu 2-3 lat w fazach",
-        risks: [
-          "Opór środowiska medycznego wobec zmian",
-          "Wysokie koszty modernizacji infrastruktury",
-          "Możliwe przerwy w świadczeniu usług",
-        ],
-        opportunities: [
-          "Skrócenie kolejek do specjalistów",
-          "Lepsza koordynacja opieki",
-          "Rozwój telemedycyny",
-        ],
-        recommendation: `Na podstawie ${
-          participants || "wielu"
-        } uczestników konsultacji, reforma jest potrzebna ale wymaga ostrożnej implementacji.`,
-        confidence: 92,
-      };
-    } else {
-      // prekonsultacja
-      mockSummary = {
-        mainPoints: [
-          "Projekt wprowadza nowe mechanizmy partycypacji obywatelskiej",
-          "Cyfryzacja procesów konsultacyjnych",
-          "Zwiększenie transparentności procesów legislacyjnych",
-          "Nowe narzędzia komunikacji z społeczeństwem",
-        ],
-        impact: "Średni - wpłynie na jakość procesów demokratycznych",
-        complexity: "low",
-        stakeholders: [
-          "Obywatele",
-          "Organizacje społeczne",
-          "Urzędy",
-          "Media",
-          "Eksperci",
-        ],
-        timeline: "Pilotaż w wybranych urzędach w ciągu 6 miesięcy",
-        risks: [
-          "Niska aktywność obywateli w nowych formach konsultacji",
-          "Problemy techniczne z platformami cyfrowymi",
-          "Opór części urzędników",
-        ],
-        opportunities: [
-          "Większe zaangażowanie społeczne w tworzenie prawa",
-          "Lepsza jakość projektów ustaw",
-          "Wzrost zaufania do instytucji",
-        ],
-        recommendation: `Projekt ma duży potencjał. ${
-          comments?.length || 0
-        } komentarzy wskazuje na zainteresowanie społeczne.`,
-        confidence: 78,
-      };
-    }
-
-    setSummary(mockSummary);
-    setIsAnalyzing(false);
-  };
+export function AISummary({ type, title, comments, participants }: AISummaryProps) {
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
+  const [summary, setSummary] = useState<AISummaryData | null>(null)
 
   useEffect(() => {
-    generateAISummary();
-  }, [type, title]);
+    const generateAISummary = async () => {
+      setIsAnalyzing(true)
+
+      // Symulacja czasu analizy
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
+      // Mockowe streszczenie AI na podstawie typu
+      let mockSummary: AISummaryData
+
+      if (type === 'ustawa') {
+        mockSummary = {
+          mainPoints: [
+            'Wprowadzenie nowych standardów ochrony danych osobowych',
+            'Wzmocnienie kar za naruszenie przepisów',
+            'Uproszczenie procedur dla małych organizacji',
+            'Rozszerzenie definicji danych wrażliwych',
+          ],
+          impact: 'Średni - wpłynie na wszystkie instytucje publiczne i część sektora prywatnego',
+          complexity: 'medium',
+          stakeholders: [
+            'Instytucje publiczne',
+            'Firmy IT',
+            'Organizacje pozarządowe',
+            'Obywatele',
+          ],
+          timeline: 'Wejście w życie planowane na 6 miesięcy od publikacji',
+          risks: [
+            'Wysokie koszty implementacji dla małych firm',
+            'Możliwe opóźnienia w dostosowaniu systemów IT',
+            'Potrzeba szkoleń dla personelu',
+          ],
+          opportunities: [
+            'Zwiększenie zaufania obywateli do instytucji',
+            'Harmonizacja z regulacjami UE',
+            'Rozwój sektora cyberbezpieczeństwa',
+          ],
+          recommendation:
+            'Ustawa jest potrzebna, ale wymaga wydłużenia okresu przejściowego i dodatkowego wsparcia dla małych organizacji.',
+          confidence: 87,
+        }
+      } else if (type === 'konsultacja') {
+        mockSummary = {
+          mainPoints: [
+            'Reforma ma na celu poprawę dostępności usług zdrowotnych',
+            'Planowane zwiększenie finansowania o 15%',
+            'Digitalizacja procesów medycznych',
+            'Nowe standardy jakości opieki',
+          ],
+          impact: 'Wysoki - dotknie wszystkich pacjentów i pracowników służby zdrowia',
+          complexity: 'high',
+          stakeholders: [
+            'Pacjenci',
+            'Lekarze',
+            'Pielęgniarki',
+            'Szpitale',
+            'NFZ',
+            'Firmy farmaceutyczne',
+          ],
+          timeline: 'Implementacja w ciągu 2-3 lat w fazach',
+          risks: [
+            'Opór środowiska medycznego wobec zmian',
+            'Wysokie koszty modernizacji infrastruktury',
+            'Możliwe przerwy w świadczeniu usług',
+          ],
+          opportunities: [
+            'Skrócenie kolejek do specjalistów',
+            'Lepsza koordynacja opieki',
+            'Rozwój telemedycyny',
+          ],
+          recommendation: `Na podstawie ${
+            participants || 'wielu'
+          } uczestników konsultacji, reforma jest potrzebna ale wymaga ostrożnej implementacji.`,
+          confidence: 92,
+        }
+      } else {
+        // prekonsultacja
+        mockSummary = {
+          mainPoints: [
+            'Projekt wprowadza nowe mechanizmy partycypacji obywatelskiej',
+            'Cyfryzacja procesów konsultacyjnych',
+            'Zwiększenie transparentności procesów legislacyjnych',
+            'Nowe narzędzia komunikacji z społeczeństwem',
+          ],
+          impact: 'Średni - wpłynie na jakość procesów demokratycznych',
+          complexity: 'low',
+          stakeholders: ['Obywatele', 'Organizacje społeczne', 'Urzędy', 'Media', 'Eksperci'],
+          timeline: 'Pilotaż w wybranych urzędach w ciągu 6 miesięcy',
+          risks: [
+            'Niska aktywność obywateli w nowych formach konsultacji',
+            'Problemy techniczne z platformami cyfrowymi',
+            'Opór części urzędników',
+          ],
+          opportunities: [
+            'Większe zaangażowanie społeczne w tworzenie prawa',
+            'Lepsza jakość projektów ustaw',
+            'Wzrost zaufania do instytucji',
+          ],
+          recommendation: `Projekt ma duży potencjał. ${
+            comments?.length || 0
+          } komentarzy wskazuje na zainteresowanie społeczne.`,
+          confidence: 78,
+        }
+      }
+
+      setSummary(mockSummary)
+      setIsAnalyzing(false)
+    }
+
+    generateAISummary()
+  }, [type, title, participants, comments])
 
   const getComplexityColor = (complexity: string) => {
     switch (complexity) {
-      case "low":
-        return "green";
-      case "medium":
-        return "yellow";
-      case "high":
-        return "red";
+      case 'low':
+        return 'green'
+      case 'medium':
+        return 'yellow'
+      case 'high':
+        return 'red'
       default:
-        return "gray";
+        return 'gray'
     }
-  };
+  }
 
   const getComplexityLabel = (complexity: string) => {
     switch (complexity) {
-      case "low":
-        return "Niska";
-      case "medium":
-        return "Średnia";
-      case "high":
-        return "Wysoka";
+      case 'low':
+        return 'Niska'
+      case 'medium':
+        return 'Średnia'
+      case 'high':
+        return 'Wysoka'
       default:
-        return "Nieznana";
+        return 'Nieznana'
     }
-  };
+  }
 
   const getTypeLabel = (type: string) => {
     switch (type) {
-      case "ustawa":
-        return "Ustawy";
-      case "konsultacja":
-        return "Konsultacji";
-      case "prekonsultacja":
-        return "Prekonsultacji";
+      case 'ustawa':
+        return 'Ustawy'
+      case 'konsultacja':
+        return 'Konsultacji'
+      case 'prekonsultacja':
+        return 'Prekonsultacji'
       default:
-        return "Dokumentu";
+        return 'Dokumentu'
     }
-  };
+  }
 
   if (isAnalyzing) {
     return (
@@ -233,19 +214,15 @@ export function AISummary({
           </Text>
         </Stack>
       </Card>
-    );
+    )
   }
 
   if (!summary) {
     return (
-      <Alert
-        icon={<IconInfoCircle size={16} />}
-        title="Streszczenie AI"
-        color="blue"
-      >
+      <Alert icon={<IconInfoCircle size={16} />} title="Streszczenie AI" color="blue">
         Brak danych do analizy. Spróbuj ponownie później.
       </Alert>
-    );
+    )
   }
 
   return (
@@ -267,15 +244,6 @@ export function AISummary({
           <Badge color="blue" variant="light">
             Pewność: {summary.confidence}%
           </Badge>
-          <Tooltip label="Wygeneruj ponownie">
-            <ActionIcon
-              variant="light"
-              onClick={generateAISummary}
-              loading={isAnalyzing}
-            >
-              <IconRefresh size={16} />
-            </ActionIcon>
-          </Tooltip>
         </Group>
       </Group>
 
@@ -312,11 +280,7 @@ export function AISummary({
 
         <Card p="md" withBorder>
           <Group mb="xs">
-            <ThemeIcon
-              color={getComplexityColor(summary.complexity)}
-              variant="light"
-              size="sm"
-            >
+            <ThemeIcon color={getComplexityColor(summary.complexity)} variant="light" size="sm">
               <IconScale size={14} />
             </ThemeIcon>
             <Text fw={600} size="sm">
@@ -413,5 +377,5 @@ export function AISummary({
         </Text>
       </Card>
     </Stack>
-  );
+  )
 }
