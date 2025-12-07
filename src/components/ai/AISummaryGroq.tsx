@@ -31,6 +31,7 @@ import {
 
 interface Props {
   type: 'ustawa' | 'konsultacja' | 'prekonsultacja'
+  entityId: string
   title: string
   description?: string
   content?: string
@@ -50,25 +51,41 @@ interface SummaryData {
     opportunities: string[]
     recommendation: string
   }
+  fromCache?: boolean
 }
 
-export function AISummaryGroq({ type, title, description, content = '', comments = [] }: Props) {
+export function AISummaryGroq({
+  type,
+  entityId,
+  title,
+  description,
+  content = '',
+  comments = [],
+}: Props) {
   const [data, setData] = useState<SummaryData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const fetchSummary = async () => {
+  const fetchSummary = async (forceRegenerate = false) => {
     setLoading(true)
     setError(null)
     try {
       const res = await fetch('/api/ai/summary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, title, description, content, comments }),
+        body: JSON.stringify({
+          type,
+          entityId,
+          title,
+          description,
+          content,
+          comments,
+          forceRegenerate,
+        }),
       })
       const json = await res.json()
       if (json.error) throw new Error(json.error)
-      setData(json) // { humanSummary, summary }
+      setData(json) // { humanSummary, summary, fromCache }
     } catch (err: Error | unknown) {
       setError(err instanceof Error ? err.message : 'Błąd analizy')
     } finally {
@@ -77,9 +94,9 @@ export function AISummaryGroq({ type, title, description, content = '', comments
   }
 
   useEffect(() => {
-    if (content || comments.length > 0) fetchSummary()
+    if (entityId && (content || comments.length > 0)) fetchSummary()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [entityId])
 
   if (loading)
     return (
@@ -92,7 +109,7 @@ export function AISummaryGroq({ type, title, description, content = '', comments
     return (
       <Alert color="red" title="Błąd" icon={<IconBrain />}>
         {error}{' '}
-        <Button size="xs" onClick={fetchSummary} leftSection={<IconRefresh />}>
+        <Button size="xs" onClick={() => fetchSummary()} leftSection={<IconRefresh />}>
           Spróbuj ponownie
         </Button>
       </Alert>
@@ -105,13 +122,29 @@ export function AISummaryGroq({ type, title, description, content = '', comments
     <Stack gap="xl">
       {/* TO JEST TO, CZEGO CHCIAŁEŚ – zwięzłe streszczenie całej ustawy */}
       <Paper withBorder p="lg" radius="md" bg="gray.0">
-        <Group mb="md">
-          <ThemeIcon size="lg" radius="md" color="blue" variant="light">
-            <IconQuote />
-          </ThemeIcon>
-          <Text fw={700} size="lg">
-            Streszczenie aktu prawnego
-          </Text>
+        <Group mb="md" justify="space-between">
+          <Group>
+            <ThemeIcon size="lg" radius="md" color="blue" variant="light">
+              <IconQuote />
+            </ThemeIcon>
+            <Text fw={700} size="lg">
+              Streszczenie aktu prawnego
+            </Text>
+          </Group>
+          {data.fromCache && (
+            <Badge color="green" variant="light" leftSection={<IconCheck size={14} />}>
+              Z pamięci
+            </Badge>
+          )}
+          <Button
+            size="xs"
+            variant="subtle"
+            onClick={() => fetchSummary(true)}
+            leftSection={<IconRefresh size={14} />}
+            disabled={loading}
+          >
+            Regeneruj
+          </Button>
         </Group>
         <Blockquote color="blue" icon={null}>
           <Text size="lg" lh={1.55}>

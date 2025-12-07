@@ -36,6 +36,7 @@ export default function KonsultacjaDetails({ project }: Props) {
         <Tabs.Panel value="summary" pt="xl">
           <AISummaryGroq
             type="konsultacja"
+            entityId={project.id}
             title={project.title}
             description={project.description}
             content={`Konsultacje społeczne: ${project.title}. Instytucja: ${

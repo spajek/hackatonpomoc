@@ -41,6 +41,7 @@ export default function PrekonsultacjaDetails({ project }: { project: PreConsult
         <Tabs.Panel value="summary" pt="xl">
           <AISummaryGroq
             type="prekonsultacja"
+            entityId={current.id}
             title={current.title}
             description={current.description}
             comments={current.comments.map((c) => c.content)}

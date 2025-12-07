@@ -197,6 +197,7 @@ export default function ActDetailsView({ act }: ActDetailsViewProps) {
         <Tabs.Panel value="ai-summary" pt="md">
           <AISummaryGroq
             type="ustawa"
+            entityId={act.ELI}
             title={act.title}
             description={`Akt prawny ${act.displayAddress}`}
             content={
