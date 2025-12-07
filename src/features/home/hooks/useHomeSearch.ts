@@ -1,13 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { Act } from '@/types'
-import { PreConsultationProject } from '@/types'
+import { Act, PreConsultationProject, ConsultationProject } from '@/types'
 
 export function useHomeSearch(
   actsData: Act[],
   prekonsultacjeData: PreConsultationProject[],
-  konsultacjeData: PreConsultationProject[],
+  konsultacjeData: ConsultationProject[],
 ) {
   const [searchQuery, setSearchQuery] = useState('')
 
